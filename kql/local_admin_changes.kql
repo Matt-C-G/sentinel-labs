@@ -1,5 +1,4 @@
-// New local admin additions
 DeviceEvents
-| where ActionType in ("UserAccountAddedToLocalGroup")
+| where ActionType == "UserAccountAddedToLocalGroup"
 | where AdditionalFields contains "Administrators"
 | project TimeGenerated, DeviceName, InitiatingProcessAccountName, TargetAccount

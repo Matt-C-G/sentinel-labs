@@ -1,26 +1,27 @@
-# Sentinel Labs — SOC/SC-200 Proof Pack
+# Sentinel Labs (Lab-Simulated)
 
-**Purpose:** Demonstrate Microsoft Sentinel capability: KQL hunting, analytics rules, a workbook, a basic playbook, and a KEV watchlist. All importable and demo-friendly.
+**What this proves** — Hunt (6 KQL) → Detect (3 rules) → Respond (playbook) → Report (workbook + KEV).
 
-## Included
-- `kql/` — 6 hunting queries
-- `analytics-rules/` — 3 scheduled rules (JSON)
-- `workbooks/` — 1 workbook (JSON)
-- `playbooks/` — 1 Logic App (ARM) to tag & assign incidents
-- `data/watchlists/` — KEV subset CSV
-- `evidence/` — add screenshots here after import/tests
-- `onepager/` — recruiter one-pager
+**Quick Start**
+1) Watchlist: upload `data/watchlists/kev_subset.csv` as `KEV`
+2) Workbooks: Add → Advanced Editor → paste `workbooks/workbook_core.json`
+3) Analytics: Import 3 rules (enable)
+4) Logic Apps: Deploy `playbooks/playbook_tag_assign.json` → grant "Microsoft Sentinel Responder" → Automation (run playbook)
 
-## Quick start (import order)
-1. Upload `data/watchlists/kev_subset.csv` as a **Watchlist** named `KEV`.
-2. Import `workbooks/workbook_core.json` (Workbooks → Add → Advanced Editor).
-3. Import rules from `analytics-rules/` and enable them.
-4. Deploy `playbooks/playbook_tag_assign.json` (Logic Apps). Give its managed identity **Microsoft Sentinel Responder** on the workspace and wire it to rules (Automation).
+**Note:** events are simulated to avoid real data; replace SVGs in `evidence/` with real redacted screenshots later.
 
-## Talk track
-- **Hunt** with KQL (sign-ins, DNS, tamper, local admin, USB, RDP).
-- **Detect** by promoting high-signal hunts to **scheduled rules**.
-- **Respond** automatically: playbook **tags + assigns** incidents to Tier‑1.
-- **Report**: workbook shows **KEV exposure** and detection activity.
+## Components
 
-— Updated 2025-09-24
+- **KQL Hunts:** 6 queries for hunting (tamper, local admin, RDP spike, DNS, signins, USB)
+- **Analytics Rules:** 3 scheduled rules that create incidents
+- **Workbook:** Dashboard with KEV watchlist integration
+- **Playbook:** Logic App for auto-tagging and assignment
+- **Evidence:** Screenshots of incidents, workbooks, and rule hits
+
+## Test Triggers
+
+Use `kql/test_triggers.kql` to simulate incidents in Sentinel Logs without real data.
+
+## Pages Site
+
+Live documentation: https://matt-c-g.github.io/sentinel-labs/

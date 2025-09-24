@@ -1,7 +1,4 @@
-// Unfamiliar sign-ins / impossible travel hint
 SigninLogs
-| where TimeGenerated > ago(7d)
 | extend Country = tostring(LocationDetails.countryOrRegion)
-| summarize FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated), DistinctIPs=dcount(IPAddress) by UserPrincipalName, Country
-| where Country !in ("United States") or DistinctIPs > 5
-| order by LastSeen desc
+| summarize FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated), IPs=dcount(IPAddress) by UserPrincipalName, Country
+| where Country !in ("United States") or IPs > 5

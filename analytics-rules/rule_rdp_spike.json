@@ -1,18 +1,1 @@
-{
-  "kind": "Scheduled",
-  "properties": {
-    "displayName": "Inbound RDP Spike",
-    "enabled": true,
-    "queryFrequency": "PT30M",
-    "queryPeriod": "PT6H",
-    "triggerOperator": "GreaterThan",
-    "triggerThreshold": 5,
-    "severity": "Medium",
-    "query": "\n// Sudden spike in inbound RDP\nSecurityEvent\n| where EventID == 4624 and LogonType == 10\n| summarize Count=count() by bin(TimeGenerated, 1h), TargetAccount, Computer\n| join kind=leftouter (\n    SecurityEvent\n    | where EventID == 4625 and LogonType == 10\n    | summarize Failures=count() by bin(TimeGenerated,1h), Computer\n) on Computer, TimeGenerated\n| order by Count desc\n",
-    "eventGroupingSettings": {
-      "aggregationKind": "AlertPerResult"
-    },
-    "suppressionDuration": "PT0H",
-    "suppressionEnabled": false
-  }
-}
+{"kind":"Scheduled","properties":{"displayName":"Inbound RDP Spike","enabled":true,"queryFrequency":"PT30M","queryPeriod":"PT6H","triggerOperator":"GreaterThan","triggerThreshold":5,"severity":"Medium","query":"SecurityEvent | where EventID in (4624,4625) and LogonType == 10 | summarize Success=countif(EventID==4624), Fail=countif(EventID==4625) by bin(TimeGenerated,1h), Computer | where Success > 5","eventGroupingSettings":{"aggregationKind":"AlertPerResult"}}}

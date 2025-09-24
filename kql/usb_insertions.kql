@@ -1,5 +1,3 @@
-// USB storage insertions
 DeviceEvents
 | where ActionType in ("UsbDriveMounted","UsbDriveConnected")
-| summarize Count=count() by bin(TimeGenerated, 1h), DeviceName
-| order by TimeGenerated desc
+| summarize Count=count() by bin(TimeGenerated,1h), DeviceName

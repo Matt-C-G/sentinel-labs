@@ -1,0 +1,18 @@
+// paste into Logs to simulate incidents
+let nowt = now();
+datatable(TimeGenerated:datetime, DeviceName:string, ActionType:string, InitiatingProcessAccountName:string)
+[ nowt, "demo-endpoint", "TamperProtectionFailure", "demo\\user" ] | into table DeviceEvents;
+
+let t = now();
+datatable(TimeGenerated:datetime, DeviceName:string, ActionType:string, InitiatingProcessAccountName:string, TargetAccount:string, AdditionalFields:string)
+[ t,"demo-endpoint","UserAccountAddedToLocalGroup","demo\\it-admin","demo\\temp-user",'{"Group":"Administrators"}' ] | into table DeviceEvents;
+
+datatable(TimeGenerated:datetime, EventID:int, LogonType:int, TargetAccount:string, Computer:string)
+[
+ t,4624,10,"demo\\user","demo-host",
+ t,4624,10,"demo\\user","demo-host",
+ t,4624,10,"demo\\user","demo-host",
+ t,4624,10,"demo\\user","demo-host",
+ t,4624,10,"demo\\user","demo-host",
+ t,4625,10,"demo\\user","demo-host"
+] | into table SecurityEvent;

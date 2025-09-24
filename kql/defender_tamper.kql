@@ -1,0 +1,6 @@
+// Defender tamper or sensor off
+DeviceEvents
+| where TimeGenerated > ago(14d)
+| where ActionType in ("TamperProtectionFailure","SenseServiceStopped","RealTimeProtectionDisabled")
+| project TimeGenerated, DeviceName, ActionType, InitiatingProcessAccountName
+| order by TimeGenerated desc

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2019-05-01",
+      "name": "TagAndAssignIncident",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "definition": {
+          "$schema": "https://schema.management.azure.com/schemas/2016-06-01/Microsoft.Logic.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {},
+          "triggers": {
+            "manual": {
+              "type": "Request",
+              "kind": "Http",
+              "schema": {}
+            }
+          },
+          "actions": {
+            "TagIncident": {
+              "runAfter": {},
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "path": "/Incidents/Tag",
+                "queries": {
+                  "tag": "auto"
+                }
+              }
+            },
+            "AssignIncident": {
+              "runAfter": {
+                "TagIncident": [
+                  "Succeeded"
+                ]
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "path": "/Incidents/Assign",
+                "queries": {
+                  "owner": "Tier-1"
+                }
+              }
+            }
+          }
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "azuresentinel": {
+                "connectionId": "/subscriptions/<sub>/providers/Microsoft.Web/connections/azuresentinel",
+                "connectionName": "azuresentinel",
+                "id": "/subscriptions/<sub>/providers/Microsoft.Web/locations/<loc>/managedApis/azuresentinel"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

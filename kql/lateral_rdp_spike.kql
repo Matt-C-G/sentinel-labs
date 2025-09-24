@@ -1,0 +1,10 @@
+// Sudden spike in inbound RDP
+SecurityEvent
+| where EventID == 4624 and LogonType == 10
+| summarize Count=count() by bin(TimeGenerated, 1h), TargetAccount, Computer
+| join kind=leftouter (
+    SecurityEvent
+    | where EventID == 4625 and LogonType == 10
+    | summarize Failures=count() by bin(TimeGenerated,1h), Computer
+) on Computer, TimeGenerated
+| order by Count desc

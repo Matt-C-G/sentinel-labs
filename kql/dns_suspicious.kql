@@ -1,0 +1,7 @@
+// Newly-seen domains + risky TLDs
+DnsEvents
+| where TimeGenerated > ago(7d)
+| extend TLD = tostring(split(QueryName, ".")[-1])
+| summarize FirstSeen=min(TimeGenerated), Count=count() by QueryName, TLD
+| where Count < 3 or TLD in ("zip","mov","top","xyz")
+| order by Count asc

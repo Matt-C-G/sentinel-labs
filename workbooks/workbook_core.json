@@ -1,0 +1,29 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": {
+          "input": {
+            "version": "KqlItem/1.0"
+          },
+          "query": "\n// Newly-seen domains + risky TLDs\nDnsEvents\n| where TimeGenerated > ago(7d)\n| extend TLD = tostring(split(QueryName, \".\")[-1])\n| summarize FirstSeen=min(TimeGenerated), Count=count() by QueryName, TLD\n| where Count < 3 or TLD in (\"zip\",\"mov\",\"top\",\"xyz\")\n| order by Count asc\n",
+          "title": "Suspicious DNS"
+        }
+      }
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": {
+          "input": {
+            "version": "KqlItem/1.0"
+          },
+          "query": "\n// Defender tamper or sensor off\nDeviceEvents\n| where TimeGenerated > ago(14d)\n| where ActionType in (\"TamperProtectionFailure\",\"SenseServiceStopped\",\"RealTimeProtectionDisabled\")\n| project TimeGenerated, DeviceName, ActionType, InitiatingProcessAccountName\n| order by TimeGenerated desc\n",
+          "title": "MDE Tamper Events"
+        }
+      }
+    }
+  ]
+}

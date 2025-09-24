@@ -1,0 +1,18 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "New Local Admin Added",
+    "enabled": true,
+    "queryFrequency": "PT30M",
+    "queryPeriod": "PT6H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "severity": "Medium",
+    "query": "\n// New local admin additions\nDeviceEvents\n| where ActionType in (\"UserAccountAddedToLocalGroup\")\n| where AdditionalFields contains \"Administrators\"\n| project TimeGenerated, DeviceName, InitiatingProcessAccountName, TargetAccount\n",
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "suppressionDuration": "PT0H",
+    "suppressionEnabled": false
+  }
+}

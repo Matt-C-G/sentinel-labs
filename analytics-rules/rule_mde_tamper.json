@@ -1,0 +1,18 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "MDE Tamper or Sensor Off",
+    "enabled": true,
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT1H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "severity": "High",
+    "query": "\n// Defender tamper or sensor off\nDeviceEvents\n| where TimeGenerated > ago(14d)\n| where ActionType in (\"TamperProtectionFailure\",\"SenseServiceStopped\",\"RealTimeProtectionDisabled\")\n| project TimeGenerated, DeviceName, ActionType, InitiatingProcessAccountName\n| order by TimeGenerated desc\n",
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "suppressionDuration": "PT0H",
+    "suppressionEnabled": false
+  }
+}

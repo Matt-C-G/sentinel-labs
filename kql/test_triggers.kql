@@ -1,10 +1,14 @@
-// Paste into Logs to simulate incidents in a lab workspace.
+// A) Tamper
 let nowt = now();
 datatable(TimeGenerated:datetime, DeviceName:string, ActionType:string, InitiatingProcessAccountName:string)
 [ nowt, "demo-endpoint", "TamperProtectionFailure", "demo\\user" ] | into table DeviceEvents;
+
+// B) Local admin add
 let t = now();
 datatable(TimeGenerated:datetime, DeviceName:string, ActionType:string, InitiatingProcessAccountName:string, TargetAccount:string, AdditionalFields:string)
 [ t,"demo-endpoint","UserAccountAddedToLocalGroup","demo\\it-admin","demo\\temp-user",'{"Group":"Administrators"}' ] | into table DeviceEvents;
+
+// C) RDP spike
 datatable(TimeGenerated:datetime, EventID:int, LogonType:int, TargetAccount:string, Computer:string)
 [
  t,4624,10,"demo\\user","demo-host",

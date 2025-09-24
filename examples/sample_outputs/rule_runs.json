@@ -1,0 +1,20 @@
+[
+  {
+    "Rule": "MDE Tamper or Sensor Off",
+    "LastRunUtc": "2025-01-24T16:45:00",
+    "Matches": 1,
+    "Severity": "High"
+  },
+  {
+    "Rule": "New Local Admin Added",
+    "LastRunUtc": "2025-01-24T16:43:00",
+    "Matches": 1,
+    "Severity": "Medium"
+  },
+  {
+    "Rule": "Inbound RDP Spike",
+    "LastRunUtc": "2025-01-24T16:42:00",
+    "Matches": 1,
+    "Severity": "Medium"
+  }
+]

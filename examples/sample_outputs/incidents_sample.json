@@ -1,0 +1,48 @@
+[
+  {
+    "Title": "MDE Tamper or Sensor Off",
+    "Severity": "High",
+    "Status": "New",
+    "Entities": [
+      "demo-endpoint"
+    ],
+    "Tags": [
+      "auto",
+      "lab"
+    ],
+    "AssignedTo": "Tier-1",
+    "CreatedTimeUtc": "2025-01-24T16:45:00",
+    "LastUpdatedTimeUtc": "2025-01-24T16:45:00",
+    "Rule": "MDE Tamper or Sensor Off"
+  },
+  {
+    "Title": "New Local Admin Added",
+    "Severity": "Medium",
+    "Status": "New",
+    "Entities": [
+      "demo-endpoint"
+    ],
+    "Tags": [
+      "lab"
+    ],
+    "AssignedTo": "Unassigned",
+    "CreatedTimeUtc": "2025-01-24T16:40:00",
+    "LastUpdatedTimeUtc": "2025-01-24T16:40:00",
+    "Rule": "New Local Admin Added"
+  },
+  {
+    "Title": "Inbound RDP Spike",
+    "Severity": "Medium",
+    "Status": "New",
+    "Entities": [
+      "demo-host"
+    ],
+    "Tags": [
+      "lab"
+    ],
+    "AssignedTo": "Unassigned",
+    "CreatedTimeUtc": "2025-01-24T16:33:00",
+    "LastUpdatedTimeUtc": "2025-01-24T16:33:00",
+    "Rule": "Inbound RDP Spike"
+  }
+]
